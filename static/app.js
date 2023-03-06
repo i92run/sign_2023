@@ -173,6 +173,7 @@ function ev_canvas(ev) {
 }
 
 if (canvas) {
+    var context = canvas.getContext('2d')
     tool = new tool_pencil();
     canvas.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("mousedown", startPainting);
