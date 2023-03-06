@@ -49,7 +49,7 @@ function saveSign() {
     formdata.append("name", name);
     $.ajax({
         type : "POST",
-        url : "http://127.0.0.1:8000/saveSign",
+        url : "/saveSign",
         data : formdata,
         processData : false,
         contentType : false,
@@ -79,14 +79,14 @@ function detectImage() {
     formdata.append("file", file);
     $.ajax({
         type : "POST",
-        url : "http://127.0.0.1:8000/detectImage",
+        url : "/detectImage",
         data : formdata,
         processData : false,
         contentType : false,
         async : false,
         success : function(resp){
             // alert(JSON.stringify(resp['detect']))
-            window.location.href = 'http://127.0.0.1:8000/result/' + JSON.stringify(resp['detect'])
+            window.location.href = '/result/' + JSON.stringify(resp['detect'])
 
         },
         error: function(xtr, status, error){
