@@ -12,6 +12,7 @@ let painting = false;
 function startPainting() {
     painting=true;
 }
+
 function stopPainting(event) {
     painting=false;
 }
@@ -85,9 +86,9 @@ function detectImage() {
         contentType : false,
         async : false,
         success : function(resp){
-            // alert(JSON.stringify(resp['detect']))
-            window.location.href = '/result/' + JSON.stringify(resp['detect'])
-
+            alert("안녕하세요 " + JSON.stringify(resp['detect']) + "님")
+            window.location.href = '/'
+            // window.location.href = '/result/' + JSON.stringify(resp['detect'])
         },
         error: function(xtr, status, error){
             alert(error)
