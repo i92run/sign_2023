@@ -9,6 +9,11 @@ ctx.lineWidth = 2.5;
 
 let painting = false;
 
+var x_array = [];
+var y_array = [];
+var d_array = [];
+var d = Date.now()
+
 function startPainting() {
     painting=true;
 }
@@ -27,6 +32,9 @@ function onMouseMove(event) {
     else {
         ctx.lineTo(x, y);
         ctx.stroke();
+        x_array.push(x)
+        y_array.push(y)
+        d_array.push(Date.now() - d)
     }
 }
 
@@ -47,7 +55,13 @@ function saveSign() {
     var formdata = new FormData();
     formdata.append("file", file);
     var name = document.getElementById('name').value;
+    var x_file = new Blob([new Uint16Array(x_array)])
+    var y_file = new Blob([new Uint16Array(y_array)])
+    var d_file = new Blob([new Uint16Array(d_array)])
     formdata.append("name", name);
+    formdata.append("x_file", x_file);
+    formdata.append("y_file", y_file);
+    formdata.append("d_file", d_file);
     $.ajax({
         type : "POST",
         url : "/saveSign",
@@ -56,6 +70,10 @@ function saveSign() {
         contentType : false,
         async : false,
         success : function(resp){
+            x_array = []
+            y_array = []
+            d_array = []
+            d = Date.now()
             // alert(JSON.stringify(resp['detect']))
             // window.location.href = 'http://127.0.0.1:8000/result/' + JSON.stringify(resp['save'])
             alert("save")
@@ -76,8 +94,14 @@ function detectImage() {
         array.push(blobBin.charCodeAt(i));
     }
     var file = new Blob([new Uint8Array(array)], {type: 'image/png'});
+    var x_file = new Blob([new Uint16Array(x_array)])
+    var y_file = new Blob([new Uint16Array(y_array)])
+    var d_file = new Blob([new Uint16Array(d_array)])
     var formdata = new FormData();
     formdata.append("file", file);
+    formdata.append("x_file", x_file);
+    formdata.append("y_file", y_file);
+    formdata.append("d_file", d_file);
     $.ajax({
         type : "POST",
         url : "/detectImage",
@@ -86,6 +110,11 @@ function detectImage() {
         contentType : false,
         async : false,
         success : function(resp){
+            // alert(d_array)
+            x_array = []
+            y_array = []
+            d_array = []
+            d = Date.now()
             alert("안녕하세요 " + JSON.stringify(resp['detect']) + "님")
             window.location.href = '/'
             // window.location.href = '/result/' + JSON.stringify(resp['detect'])
