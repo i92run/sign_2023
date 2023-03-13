@@ -161,6 +161,9 @@ function tool_pencil() {
 	if (tool.started) {
 	    context.lineTo(ev._x, ev._y);
 	    context.stroke();
+        x_array.push(ev._x)
+        y_array.push(ev._y)
+        d_array.push(Date.now() - d)
 	}
     };
     // 마우스 떼면 그리기 작업을 중단한다
